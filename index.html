@@ -143,6 +143,20 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Estilo para os Badges */
+        .badge-container {
+            perspective: 1000px;
+        }
+        .badge {
+            transition: transform 0.3s;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 0 10px rgba(231, 29, 54, 0.3));
+        }
+        .badge:hover {
+            transform: scale(1.1) rotateY(10deg);
+            filter: drop-shadow(0 0 20px rgba(231, 29, 54, 0.6));
+        }
     </style>
 </head>
 <body class="selection:bg-red-900 selection:text-white">
@@ -161,6 +175,7 @@
     <div class="fixed top-6 left-0 w-full flex justify-center z-50 px-4">
         <nav class="glass-panel rounded-full px-6 py-3 flex items-center space-x-6 shadow-lg shadow-red-900/20">
             <a href="#home" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Início</a>
+            <a href="#badges" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Badges</a>
             <a href="#projects" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Projetos</a>
             <a href="#about" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Sobre</a>
             <a href="#contact" class="px-4 py-1 border border-red-600 rounded-full text-red-500 hover:bg-red-600 hover:text-white transition-all text-sm font-bold uppercase">Contato</a>
@@ -187,6 +202,7 @@
                 <span class="text-sm opacity-70">Santo Antônio do Tauá, PA | SQL | Power BI | AWS</span>
             </p>
 
+            <!-- Atualizado para o novo currículo TicianyCosta.pdf -->
             <a href="TicianyCosta.pdf" download class="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-red-600 text-red-600 font-bold tracking-widest uppercase transition-all hover:bg-red-600 hover:text-black hover:shadow-[0_0_30px_rgba(231,29,54,0.6)]">
                 <i data-lucide="file-down" class="w-5 h-5"></i>
                 Baixar Currículo
@@ -196,46 +212,54 @@
         </div>
     </section>
 
-    <!-- Seção Sobre (About) -->
-    <section id="about" class="py-24 px-4 relative">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <!-- Seção Badges & Certificações (MOVIDA PARA CIMA DE PROJETOS) -->
+    <section id="badges" class="py-24 relative bg-gradient-to-b from-black to-red-900/10 border-t border-red-900/30">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-3xl font-stranger text-red-600 mb-12 neon-flicker">BADGES & CERTIFICAÇÕES</h3>
             
-            <!-- Foto Polaroid -->
-            <div class="w-full md:w-1/3 flex justify-center perspective-container">
-                <div class="polaroid bg-gray-100 text-black w-64 md:w-80 cursor-pointer">
-                    <!-- Placeholder de Imagem -->
-                    <div class="aspect-[4/5] bg-gray-800 mb-4 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700">
-                        <img src="ticiany.png" alt="Foto de Ticiany" class="w-full h-full object-cover opacity-80 hover:opacity-100">
-                        <div class="absolute inset-0 bg-red-500/10 mix-blend-overlay"></div>
-                    </div>
-                    <div class="font-handwriting text-center font-bold text-xl font-stranger" style="-webkit-text-stroke: 0px; color: #000; text-shadow: none;">Ticiany (2025)</div>
-                </div>
-            </div>
-
-            <!-- Texto Sobre -->
-            <div class="w-full md:w-2/3 glass-panel p-8 rounded-2xl md:text-left text-center">
-                <h3 class="text-3xl md:text-4xl font-stranger text-red-500 mb-6 neon-flicker">QUEM SOU EU?</h3>
-                <p class="text-gray-300 mb-4 leading-relaxed">
-                    Graduanda em <strong>Engenharia de Software</strong> (Estácio, 2022–2026) e em transição para a área de Dados. Possuo forte base analítica com foco em transformar números em histórias.
-                </p>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    Busco oportunidades para aplicar minhas habilidades em <strong>dashboards, automação e soluções em nuvem</strong>. Sou adaptável, colaborativa e estou sempre aprendendo novas tecnologias como AWS e Segurança da Informação.
-                </p>
+            <div class="flex flex-wrap justify-center gap-12 md:gap-24">
                 
-                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Power BI</span>
-                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">SQL</span>
-                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Python (Pandas)</span>
-                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">AWS</span>
+                <!-- AWS Cloud Practitioner (Link Atualizado) -->
+                <div class="badge-container group">
+                    <a href="https://www.credly.com/badges/ae0ca611-b91b-42e3-bc07-1be2645ba8c5/linked_in_profile" target="_blank">
+                        <!-- Imagem Oficial Credly -->
+                        <img src="https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS Certified Cloud Practitioner" class="w-40 h-40 md:w-56 md:h-56 object-contain badge mx-auto">
+                    </a>
+                    <p class="text-red-500 font-bold mt-4">AWS Certified Cloud Practitioner</p>
+                    <p class="text-gray-400 text-sm">Validado</p>
                 </div>
+
+                <!-- AWS Re/Start Graduate (Link Atualizado) -->
+                <div class="badge-container group">
+                    <a href="https://www.credly.com/badges/7dcd25f0-3e99-4f42-aebd-a9465396ae6f" target="_blank">
+                        <!-- Imagem Oficial Credly -->
+                        <img src="graduate.png" alt="AWS Re/Start Graduate" class="w-40 h-40 md:w-56 md:h-56 object-contain badge mx-auto">
+                    </a>
+                    <p class="text-red-500 font-bold mt-4">AWS Re/Start Graduate</p>
+                    <p class="text-gray-400 text-sm">Em Andamento</p>
+                </div>
+
+                <!-- Cisco Introduction to Cybersecurity -->
+                <div class="badge-container group">
+                    <a href="https://www.credly.com/badges/b38a5f01-4bd8-4ca2-be8c-8d419bebaaf7" target="_blank">
+                        <!-- Imagem Oficial Credly -->
+                        <img src="cisco.png" alt="Cisco Introduction to Cybersecurity" class="w-40 h-40 md:w-56 md:h-56 object-contain badge mx-auto">
+                    </a>
+                    <p class="text-red-500 font-bold mt-4">Cisco Introduction to Cybersecurity</p>
+                    <p class="text-gray-400 text-sm">Validado</p>
+                </div>
+
             </div>
         </div>
+         <!-- Vinhas decorativas (CSS Gradient) -->
+         <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-black via-red-900 to-black opacity-50"></div>
     </section>
 
     <!-- Projetos (Carrossel Horizontal com Navegação) -->
     <section id="projects" class="py-24 relative overflow-hidden group/section">
         <div class="container mx-auto px-4 mb-10 text-center">
-            <h3 class="text-4xl font-stranger text-red-600 mb-2">PROJETOS & DADOS</h3>
+            <!-- Título atualizado para apenas PROJETOS -->
+            <h3 class="text-4xl font-stranger text-red-600 mb-2">PROJETOS</h3>
             <p class="text-gray-500 text-sm tracking-widest">Nível de Acesso: PÚBLICO</p>
         </div>
 
@@ -266,8 +290,8 @@
                     <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.9)] pointer-events-none z-10"></div>
                 </div>
 
-                <!-- Projeto 2: Spotify -->
-                <div class="snap-center shrink-0 w-[300px] md:w-[400px] h-[500px] glass-panel rounded-xl overflow-hidden relative group cursor-pointer border-t border-red-900/50 hover:border-red-500 transition-colors duration-500 project-card" onclick="window.open('https://github.com/TicianyCosta', '_blank')">
+                <!-- Projeto 2: Spotify (LINK ATUALIZADO) -->
+                <div class="snap-center shrink-0 w-[300px] md:w-[400px] h-[500px] glass-panel rounded-xl overflow-hidden relative group cursor-pointer border-t border-red-900/50 hover:border-red-500 transition-colors duration-500 project-card" onclick="window.open('https://www.linkedin.com/feed/update/urn:li:activity:7390412638972874752/?originTrackingId=P5Actrhke3vT%2FU0hmOr3zg%3D%3D', '_blank')">
                     <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-500 z-10"></div>
                     <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Análise Musical" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700">
                     
@@ -283,18 +307,19 @@
                     <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.9)] pointer-events-none z-10"></div>
                 </div>
 
-                <!-- Card 3: Estudos AWS -->
+                <!-- Card 3: Novos Projetos (Em andamento) -->
                 <div class="snap-center shrink-0 w-[300px] md:w-[400px] h-[500px] glass-panel rounded-xl overflow-hidden relative group cursor-pointer border-t border-red-900/50 hover:border-red-500 transition-colors duration-500 project-card">
                     <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-500 z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cloud Computing" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700">
+                    <!-- Imagem Genérica de Código/Tech -->
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Novos Projetos" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700">
                     
                     <div class="absolute bottom-0 left-0 w-full p-6 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black via-black/90 to-transparent">
-                        <h4 class="text-2xl font-bold text-red-500 mb-2 font-stranger">Cloud & Security</h4>
+                        <h4 class="text-2xl font-bold text-red-500 mb-2 font-stranger">Novos Projetos</h4>
                         <p class="text-gray-300 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                            Estudos avançados em AWS Re/Start, Cibersegurança e Cloud Computing.
+                            Novas ideias e soluções em desenvolvimento. Aguarde por novidades no mundo da Engenharia de Dados.
                         </p>
                         <div class="flex items-center text-red-400 text-xs font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
-                            EM PROGRESSO <i data-lucide="loader" class="ml-2 w-4 h-4 animate-spin"></i>
+                            EM ANDAMENTO <i data-lucide="loader" class="ml-2 w-4 h-4 animate-spin"></i>
                         </div>
                     </div>
                     <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.9)] pointer-events-none z-10"></div>
@@ -311,6 +336,44 @@
         <!-- Indicador de Swipe para Mobile -->
         <div class="text-center mt-4 text-gray-600 animate-bounce md:hidden">
             <i data-lucide="move-horizontal" class="inline w-6 h-6"></i>
+        </div>
+    </section>
+
+    <!-- Seção Sobre (About) -->
+    <section id="about" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            
+            <!-- Foto Polaroid -->
+            <div class="w-full md:w-1/3 flex justify-center perspective-container">
+                <div class="polaroid bg-gray-100 text-black w-64 md:w-80 cursor-pointer">
+                    <!-- Placeholder de Imagem -->
+                    <div class="aspect-[4/5] bg-gray-800 mb-4 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700">
+                        <img src="ticiany.png" alt="Foto de Ticiany" class="w-full h-full object-cover opacity-80 hover:opacity-100">
+                        <div class="absolute inset-0 bg-red-500/10 mix-blend-overlay"></div>
+                    </div>
+                    <div class="font-handwriting text-center font-bold text-xl font-stranger" style="-webkit-text-stroke: 0px; color: #000; text-shadow: none;">Ticiany (2025)</div>
+                </div>
+            </div>
+
+            <!-- Texto Sobre -->
+            <div class="w-full md:w-2/3 glass-panel p-8 rounded-2xl md:text-left text-center">
+                <h3 class="text-3xl md:text-4xl font-stranger text-red-500 mb-6 neon-flicker">QUEM SOU EU?</h3>
+                <p class="text-gray-300 mb-4 leading-relaxed">
+                    Graduanda em <strong>Engenharia de Software</strong> (Estácio, 2022–2026) e em transição para a área de Dados. Possuo forte base em análise de dados com Power BI e SQL, além de conhecimentos em AWS e Segurança da Informação.
+                </p>
+                <p class="text-gray-300 mb-6 leading-relaxed">
+                    Busco oportunidades para aplicar e expandir minhas habilidades em <strong>dashboards, visualização de dados, automação e soluções em nuvem</strong>. Sou uma pessoa adaptável, colaborativa e de rápido aprendizado.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Power BI</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">SQL</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Python (Pandas)</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">AWS</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Cibersegurança</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Scrum & Kanban</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -335,7 +398,7 @@
                 Santo Antônio do Tauá / PA
             </p>
             <p class="text-xs text-gray-600 font-mono">
-                &copy; 2025 Ticiany Costa. Design feito no Mundo Invertido.
+                &copy; 2024 Ticiany Costa. Design feito no Mundo Invertido.
             </p>
         </div>
         
@@ -362,7 +425,7 @@
         // 2. Lógica do Cursor "Lanterna"
         const cursorLight = document.getElementById('cursor-light');
         const cursorDot = document.getElementById('cursor-dot');
-        const projectCards = document.querySelectorAll('.project-card');
+        const projectCards = document.querySelectorAll('.project-card, .badge-container');
 
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX;
@@ -379,7 +442,7 @@
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Efeito de interação ao passar por cima dos cards de projeto
+        // Efeito de interação ao passar por cima dos cards de projeto e badges
         projectCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 cursorLight.style.background = 'radial-gradient(circle, rgba(231, 29, 54, 0.4) 0%, rgba(0,0,0,0) 70%)';
