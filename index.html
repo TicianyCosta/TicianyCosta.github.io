@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio | Ticiany Costa</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@300;400;700&family=Merriweather:wght@900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --stranger-red: #E71D36;
+            --upside-blue: #0A1128;
+            --neon-glow: 0 0 10px #E71D36, 0 0 20px #E71D36, 0 0 40px #E71D36;
+        }
+
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Esconde o cursor padrão */
+        }
+
+        /* Tipografia Título Stranger Things */
+        .font-stranger {
+            font-family: 'Merriweather', serif;
+            letter-spacing: -2px;
+            -webkit-text-stroke: 1px #E71D36;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .font-horror {
+            font-family: 'Creepster', display;
+        }
+
+        /* Efeito de Granulação (Film Grain) */
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: 50;
+            opacity: 0.4;
+        }
+
+        /* Custom Cursor (Lanterna) */
+        #cursor-light {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(231, 29, 54, 0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 40;
+            mix-blend-mode: screen;
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: var(--stranger-red);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 51;
+            box-shadow: 0 0 10px var(--stranger-red);
+        }
+
+        /* Efeito de Flicker nas Luzes */
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                opacity: 1;
+                text-shadow: var(--neon-glow);
+            }
+            20%, 24%, 55% {
+                opacity: 0.5;
+                text-shadow: none;
+            }
+        }
+
+        .neon-flicker {
+            animation: flicker 4s infinite alternate;
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--stranger-red);
+        }
+
+        /* Utilitários */
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(231, 29, 54, 0.2);
+        }
+
+        /* Imagem estilo Polaroid velha */
+        .polaroid {
+            background: #fff;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            transform: rotate(-3deg);
+            transition: transform 0.3s;
+        }
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.02);
+            z-index: 10;
+        }
+
+        /* Esconder scrollbar no slider, mas manter funcionalidade */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="selection:bg-red-900 selection:text-white">
+
+    <!-- Canvas para Esporos do Mundo Invertido -->
+    <canvas id="spores-canvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+    
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
+
+    <!-- Elementos do Cursor -->
+    <div id="cursor-light"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- Header Flutuante -->
+    <div class="fixed top-6 left-0 w-full flex justify-center z-50 px-4">
+        <nav class="glass-panel rounded-full px-6 py-3 flex items-center space-x-6 shadow-lg shadow-red-900/20">
+            <a href="#home" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Início</a>
+            <a href="#projects" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Projetos</a>
+            <a href="#about" class="text-gray-300 hover:text-red-500 transition-colors text-sm font-bold tracking-widest uppercase">Sobre</a>
+            <a href="#contact" class="px-4 py-1 border border-red-600 rounded-full text-red-500 hover:bg-red-600 hover:text-white transition-all text-sm font-bold uppercase">Contato</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black z-0"></div>
+        
+        <div class="relative z-10 text-center">
+            <h2 class="text-red-600 font-bold tracking-[0.5em] mb-4 animate-pulse">BEM-VINDO AO MUNDO DE</h2>
+            
+            <!-- Título Estilo Abertura -->
+            <div class="mb-12 relative group">
+                <h1 class="font-stranger text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-black stroke-red-600 neon-flicker" style="-webkit-text-stroke: 2px #E71D36;">
+                    TICIANY COSTA
+                </h1>
+                <div class="w-full h-1 bg-red-600 mt-2 shadow-[0_0_15px_rgba(231,29,54,0.8)]"></div>
+            </div>
+
+            <p class="text-gray-400 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed">
+                Engenharia de Software & Dados <br>
+                <span class="text-sm opacity-70">Santo Antônio do Tauá, PA | SQL | Power BI | AWS</span>
+            </p>
+
+            <a href="TicianyCosta.pdf" download class="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-red-600 text-red-600 font-bold tracking-widest uppercase transition-all hover:bg-red-600 hover:text-black hover:shadow-[0_0_30px_rgba(231,29,54,0.6)]">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+                Baixar Currículo
+                <!-- Efeito Glitch no hover -->
+                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 animate-pulse"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Seção Sobre (About) -->
+    <section id="about" class="py-24 px-4 relative">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            
+            <!-- Foto Polaroid -->
+            <div class="w-full md:w-1/3 flex justify-center perspective-container">
+                <div class="polaroid bg-gray-100 text-black w-64 md:w-80 cursor-pointer">
+                    <!-- Placeholder de Imagem -->
+                    <div class="aspect-[4/5] bg-gray-800 mb-4 overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700">
+                        <img src="ticiany.png" alt="Foto de Ticiany" class="w-full h-full object-cover opacity-80 hover:opacity-100">
+                        <div class="absolute inset-0 bg-red-500/10 mix-blend-overlay"></div>
+                    </div>
+                    <div class="font-handwriting text-center font-bold text-xl font-stranger" style="-webkit-text-stroke: 0px; color: #000; text-shadow: none;">Ticiany (2025)</div>
+                </div>
+            </div>
+
+            <!-- Texto Sobre -->
+            <div class="w-full md:w-2/3 glass-panel p-8 rounded-2xl md:text-left text-center">
+                <h3 class="text-3xl md:text-4xl font-stranger text-red-500 mb-6 neon-flicker">QUEM SOU EU?</h3>
+                <p class="text-gray-300 mb-4 leading-relaxed">
+                    Graduanda em <strong>Engenharia de Software</strong> (Estácio, 2022–2026) e em transição para a área de Dados. Possuo forte base analítica com foco em transformar números em histórias.
+                </p>
+                <p class="text-gray-300 mb-6 leading-relaxed">
+                    Busco oportunidades para aplicar minhas habilidades em <strong>dashboards, automação e soluções em nuvem</strong>. Sou adaptável, colaborativa e estou sempre aprendendo novas tecnologias como AWS e Segurança da Informação.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Power BI</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">SQL</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">Python (Pandas)</span>
+                    <span class="px-4 py-1 border border-red-900/50 bg-red-900/10 rounded text-red-400 text-sm">AWS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos (Carrossel Horizontal com Navegação) -->
+    <section id="projects" class="py-24 relative overflow-hidden group/section">
+        <div class="container mx-auto px-4 mb-10 text-center">
+            <h3 class="text-4xl font-stranger text-red-600 mb-2">PROJETOS & DADOS</h3>
+            <p class="text-gray-500 text-sm tracking-widest">Nível de Acesso: PÚBLICO</p>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4">
+            
+            <!-- Botão Esquerdo -->
+            <button onclick="scrollProjects('left')" class="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/50 border border-red-600/30 text-red-500 hover:bg-red-600 hover:text-white hover:shadow-[0_0_15px_rgba(231,29,54,0.6)] transition-all duration-300 hidden md:block backdrop-blur-sm -ml-4 lg:-ml-12">
+                <i data-lucide="chevron-left" class="w-8 h-8"></i>
+            </button>
+
+            <!-- Scroll Container -->
+            <div class="flex overflow-x-auto space-x-8 pb-12 px-4 snap-x snap-mandatory scrollbar-hide items-center scroll-smooth" id="project-slider">
+                
+                <!-- Projeto 1: Valorant VCT -->
+                <div class="snap-center shrink-0 w-[300px] md:w-[400px] h-[500px] glass-panel rounded-xl overflow-hidden relative group cursor-pointer border-t border-red-900/50 hover:border-red-500 transition-colors duration-500 project-card" onclick="window.open('https://github.com/TicianyCosta/projeto_vct', '_blank')">
+                    <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dashboard Valorant" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700">
+                    
+                    <div class="absolute bottom-0 left-0 w-full p-6 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black via-black/90 to-transparent">
+                        <h4 class="text-2xl font-bold text-red-500 mb-2 font-stranger">Análise Valorant VCT 2024</h4>
+                        <p class="text-gray-300 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                            Solução end-to-end (ETL com Python/Pandas) e Dashboard interativo no Power BI para insights competitivos.
+                        </p>
+                        <div class="flex items-center text-red-400 text-xs font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                            VER NO GITHUB <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.9)] pointer-events-none z-10"></div>
+                </div>
+
+                <!-- Projeto 2: Spotify -->
+                <div class="snap-center shrink-0 w-[300px] md:w-[400px] h-[500px] glass-panel rounded-xl overflow-hidden relative group cursor-pointer border-t border-red-900/50 hover:border-red-500 transition-colors duration-500 project-card" onclick="window.open('https://github.com/TicianyCosta', '_blank')">
+                    <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Análise Musical" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700">
+                    
+                    <div class="absolute bottom-0 left-0 w-full p-6 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black via-black/90 to-transparent">
+                        <h4 class="text-2xl font-bold text-red-500 mb-2 font-stranger">Spotify Data Analysis</h4>
+                        <p class="text-gray-300 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                            Banco de dados SQLite construído do zero com consultas SQL avançadas e integração com Power BI.
+                        </p>
+                        <div class="flex items-center text-red-400 text-xs font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                            VER PROJETO <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.9)] pointer-events-none z-10"></div>
+                </div>
+
+                <!-- Card 3: Estudos AWS -->
+                <div class="snap-center shrink-0 w-[300px] md:w-[400px] h-[500px] glass-panel rounded-xl overflow-hidden relative group cursor-pointer border-t border-red-900/50 hover:border-red-500 transition-colors duration-500 project-card">
+                    <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cloud Computing" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700">
+                    
+                    <div class="absolute bottom-0 left-0 w-full p-6 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black via-black/90 to-transparent">
+                        <h4 class="text-2xl font-bold text-red-500 mb-2 font-stranger">Cloud & Security</h4>
+                        <p class="text-gray-300 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                            Estudos avançados em AWS Re/Start, Cibersegurança e Cloud Computing.
+                        </p>
+                        <div class="flex items-center text-red-400 text-xs font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                            EM PROGRESSO <i data-lucide="loader" class="ml-2 w-4 h-4 animate-spin"></i>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.9)] pointer-events-none z-10"></div>
+                </div>
+
+            </div>
+
+            <!-- Botão Direito -->
+            <button onclick="scrollProjects('right')" class="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/50 border border-red-600/30 text-red-500 hover:bg-red-600 hover:text-white hover:shadow-[0_0_15px_rgba(231,29,54,0.6)] transition-all duration-300 hidden md:block backdrop-blur-sm -mr-4 lg:-mr-12">
+                <i data-lucide="chevron-right" class="w-8 h-8"></i>
+            </button>
+        </div>
+        
+        <!-- Indicador de Swipe para Mobile -->
+        <div class="text-center mt-4 text-gray-600 animate-bounce md:hidden">
+            <i data-lucide="move-horizontal" class="inline w-6 h-6"></i>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-black py-12 border-t border-red-900/30 relative">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-stranger text-white mb-8">FALE COMIGO</h2>
+            
+            <div class="flex justify-center space-x-8 mb-8">
+                <a href="https://github.com/TicianyCosta" target="_blank" class="text-gray-400 hover:text-red-500 transition-colors transform hover:scale-125">
+                    <i data-lucide="github" class="w-8 h-8"></i>
+                </a>
+                <a href="https://linkedin.com/in/ticiany-costa" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors transform hover:scale-125">
+                    <i data-lucide="linkedin" class="w-8 h-8"></i>
+                </a>
+                <a href="mailto:ticiany.engineer@gmail.com" class="text-gray-400 hover:text-white transition-colors transform hover:scale-125">
+                    <i data-lucide="mail" class="w-8 h-8"></i>
+                </a>
+            </div>
+            
+            <p class="text-xs text-gray-600 font-mono mb-2">
+                Santo Antônio do Tauá / PA
+            </p>
+            <p class="text-xs text-gray-600 font-mono">
+                &copy; 2025 Ticiany Costa. Design feito no Mundo Invertido.
+            </p>
+        </div>
+        
+        <!-- Vinhas decorativas (CSS Gradient) -->
+        <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-black via-red-900 to-black opacity-50"></div>
+    </footer>
+
+    <script>
+        // Inicializa Icones
+        lucide.createIcons();
+
+        // 1. Lógica do Scroll do Carrossel
+        function scrollProjects(direction) {
+            const container = document.getElementById('project-slider');
+            const scrollAmount = 420; // Aproximadamente a largura do card + gap
+            
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // 2. Lógica do Cursor "Lanterna"
+        const cursorLight = document.getElementById('cursor-light');
+        const cursorDot = document.getElementById('cursor-dot');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // Move o ponto central
+            cursorDot.style.left = `${x}px`;
+            cursorDot.style.top = `${y}px`;
+
+            // Move a luz com um leve delay (efeito smooth)
+            cursorLight.animate({
+                left: `${x}px`,
+                top: `${y}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Efeito de interação ao passar por cima dos cards de projeto
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                cursorLight.style.background = 'radial-gradient(circle, rgba(231, 29, 54, 0.4) 0%, rgba(0,0,0,0) 70%)';
+                cursorLight.style.width = '500px';
+                cursorLight.style.height = '500px';
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(2)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                cursorLight.style.background = 'radial-gradient(circle, rgba(231, 29, 54, 0.15) 0%, rgba(0,0,0,0) 70%)';
+                cursorLight.style.width = '400px';
+                cursorLight.style.height = '400px';
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // 3. Lógica dos Esporos (Partículas Flutuantes)
+        const canvas = document.getElementById('spores-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; // Movimento horizontal lento
+                this.vy = (Math.random() - 0.5) * 0.5; // Movimento vertical lento
+                this.size = Math.random() * 2 + 0.5;
+                this.alpha = Math.random() * 0.5 + 0.1;
+                this.life = Math.random() * 100;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life--;
+
+                // Se sair da tela ou morrer, reseta
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height || this.life < 0) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(180, 180, 200, ${this.alpha})`; // Cor cinza/azulada dos esporos
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 150; i++) { // Quantidade de esporos
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        resize();
+        initParticles();
+        animateParticles();
+
+    </script>
+</body>
+</html>
