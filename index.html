@@ -157,6 +157,18 @@
             transform: scale(1.1) rotateY(10deg);
             filter: drop-shadow(0 0 20px rgba(231, 29, 54, 0.6));
         }
+
+        /* Nova Animação da Fenda (Rift) */
+        @keyframes rift-pulse {
+            0%, 100% { opacity: 0.5; transform: scaleX(0.98); }
+            50% { opacity: 1; transform: scaleX(1.02); box-shadow: 0 0 30px rgba(231, 29, 54, 0.8); }
+        }
+        .rift-divider {
+            height: 2px;
+            background: radial-gradient(circle, #ff0000 0%, transparent 80%);
+            box-shadow: 0 0 15px rgba(231, 29, 54, 0.6);
+            animation: rift-pulse 3s infinite ease-in-out;
+        }
     </style>
 </head>
 <body class="selection:bg-red-900 selection:text-white">
@@ -186,7 +198,7 @@
     <section id="home" class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black z-0"></div>
         
-        <div class="relative z-10 text-center">
+        <div class="relative z-10 text-center flex-grow flex flex-col justify-center">
             <h2 class="text-red-600 font-bold tracking-[0.5em] mb-4 animate-pulse">BEM-VINDO AO MUNDO DE</h2>
             
             <!-- Título Estilo Abertura -->
@@ -202,12 +214,24 @@
                 <span class="text-sm opacity-70">Santo Antônio do Tauá, PA | SQL | Power BI | AWS</span>
             </p>
 
-            <a href="TicianyCosta.pdf" download class="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-red-600 text-red-600 font-bold tracking-widest uppercase transition-all hover:bg-red-600 hover:text-black hover:shadow-[0_0_30px_rgba(231,29,54,0.6)]">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
-                Baixar Currículo
-                <!-- Efeito Glitch no hover -->
-                <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 animate-pulse"></div>
-            </a>
+            <div class="mb-8">
+                <a href="TicianyCosta.pdf" download class="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-red-600 text-red-600 font-bold tracking-widest uppercase transition-all hover:bg-red-600 hover:text-black hover:shadow-[0_0_30px_rgba(231,29,54,0.6)]">
+                    <i data-lucide="file-down" class="w-5 h-5"></i>
+                    Baixar Currículo
+                    <!-- Efeito Glitch no hover -->
+                    <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-20 animate-pulse"></div>
+                </a>
+            </div>
+        </div>
+
+        <!-- NOVO ELEMENTO: Indicador de Fenda/Rolagem para preencher espaço -->
+        <div class="relative z-10 w-full max-w-4xl mx-auto pb-10 mt-auto">
+            <div class="flex flex-col items-center">
+                <p class="text-red-800/80 text-xs tracking-[0.4em] font-bold uppercase mb-2 animate-pulse">Explorar o Desconhecido</p>
+                <i data-lucide="chevrons-down" class="text-red-700 w-6 h-6 animate-bounce mb-4 opacity-70"></i>
+                <!-- Linha Divisória "Fenda" -->
+                <div class="rift-divider w-full"></div>
+            </div>
         </div>
     </section>
 
@@ -373,7 +397,7 @@
             <i data-lucide="move-horizontal" class="inline w-6 h-6"></i>
         </div>
 
-        <!-- Vinhas decorativas (CSS Gradient) - MOVED HERE -->
+        <!-- Vinhas decorativas (CSS Gradient) - MOVIDA PARA O FINAL DE PROJETOS -->
         <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-black via-red-900 to-black opacity-50"></div>
     </section>
 
