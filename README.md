@@ -4,6 +4,8 @@
 
 Bem-vindo ao meu portfólio pessoal! Este projeto foi desenvolvido para apresentar minha trajetória, habilidades e projetos na área de **Engenharia de Software** e **Dados**. O design foi inspirado na temática "Mundo Invertido" (Stranger Things), trazendo uma identidade visual única e imersiva.
 
+![Preview do Site](assets/img/preview.jpeg)
+
 🔗 **Acesse o portfólio online:** [https://ticianycosta.github.io/](https://ticianycosta.github.io/)
 
 ---
